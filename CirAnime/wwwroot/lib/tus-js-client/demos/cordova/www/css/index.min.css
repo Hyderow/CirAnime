@@ -1,0 +1,8 @@
+/**
+ * Minified by jsDelivr using clean-css v4.2.1.
+ * Original file: /npm/tus-js-client@1.8.0/demos/cordova/www/css/index.css
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+*{-webkit-tap-highlight-color:transparent}body{-webkit-touch-callout:none;-webkit-text-size-adjust:none;-webkit-user-select:none;background-color:#e4e4e4;background-attachment:fixed;font-family:HelveticaNeue-Light,HelveticaNeue,Helvetica,Arial,sans-serif;font-size:15px;height:100%;margin:0;padding:0;width:100%}.Logo__image{max-width:80%}.Logo__wrapper{text-align:center;margin:40px 0 20px}ol.List{list-style:none;counter-reset:item;padding:0;margin:0 10%}ol.List li{counter-increment:item}ol.List li:before{display:inline-block;height:2em;width:2em;margin-right:.5em;text-align:center;line-height:2em;color:#fff;font-style:italic;font-weight:700;content:counter(item);border-radius:100%;background-color:#48aa92}.List__content{text-align:center;margin:15px 0}.File__button,.Upload__button{background:#48aa92;color:#fff;border:0;border-radius:4px;padding:1em 1.5em}.File__link,.Upload__link{text-align:center;font-style:italic}.Upload__progress{font-style:italic}.Upload__progress progress:not([value]){display:none}
+/*# sourceMappingURL=/sm/6d9082f403fd0892c7c8536c1566ccc034e34cb10dbf82bfec45b96f9964cc85.map */
