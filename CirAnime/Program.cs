@@ -22,8 +22,6 @@ namespace CirAnime
         Host.CreateDefaultBuilder(args)
             .ConfigureHostConfiguration(config =>
             {
-              
-              //config.AddEnvironmentVariables("DISCORD_");
               config.AddJsonFile("/var/www/settings/discordsettings.json", true);
             })
             .ConfigureWebHostDefaults(webBuilder =>
