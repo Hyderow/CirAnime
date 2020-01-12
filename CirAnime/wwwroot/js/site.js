@@ -91,7 +91,9 @@ function startUpload() {
         },
         onProgress: function (bytesUploaded, bytesTotal) {
             var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
-            progressBar.style.width = percentage + "%";
+            progress.max = 100;
+            progress.value = percentage;
+            //progressBar.style.width = percentage + "%";
             console.log(bytesUploaded, bytesTotal, percentage + "%");
         },
         onSuccess: function () {

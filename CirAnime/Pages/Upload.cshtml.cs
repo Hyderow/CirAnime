@@ -16,13 +16,13 @@ namespace CirAnime.Pages
   [Authorize]
   [RequestFormLimits(ValueLengthLimit = 1000_000_000, MultipartBodyLengthLimit = 1000_000_000)]
   [RequestSizeLimit(1000_000_000)]
-  public class FileUploadModel : PageModel
+  public class UploadModel : PageModel
   {
-    private readonly ILogger<FileUploadModel> _logger;
+    private readonly ILogger<UploadModel> _logger;
     private readonly string uploadPath;
 
 
-    public FileUploadModel(ILogger<FileUploadModel> logger, IConfiguration config)
+    public UploadModel(ILogger<UploadModel> logger, IConfiguration config)
     {
       _logger = logger;
       uploadPath = config.GetValue<string>("FileUploadPath", "");
@@ -31,9 +31,9 @@ namespace CirAnime.Pages
 
     public IActionResult OnGet()
     {
-      //if (HttpContext.User.Identity.IsAuthenticated)
+      if (!HttpContext.User.Identity.IsAuthenticated)
         return Redirect("/");
-      Response.Headers.Add("test", "testvalue" );
+      return Page();
     }
 
     [BindProperty]
