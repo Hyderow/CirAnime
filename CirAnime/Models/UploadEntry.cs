@@ -10,19 +10,23 @@ namespace CirAnime.Models
   public class UploadEntry
   {
     public UploadEntry() { }
-    public UploadEntry(string title, string originalFileName, string owner, DateTime time)
+    public UploadEntry(string title, string originalFileName, User user, DateTime time)
     {
       Title = title;
       OriginalFileName = originalFileName;
-      Owner = owner;
+      User = user;
       UploadDate = time;
     }
     public int ID { get; set; }
     public string Title { get; set; }
     public string OriginalFileName { get; set; }
-    public string Owner { get; set; }
+    //public int UserID { get; set; }
+    public User User { get; set; }
 
     [DataType(DataType.Date)]
     public DateTime UploadDate { get ; set; }
+    public MediaInfo MediaInfo { get; set; }
+
+    public List<ProcessingJob> ProcessingJobs { get; } = new List<ProcessingJob>();
   }
 }

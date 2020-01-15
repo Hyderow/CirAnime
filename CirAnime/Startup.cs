@@ -41,7 +41,9 @@ namespace CirAnime
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddHttpContextAccessor();
-      services.AddRazorPages();
+      services.AddRazorPages().AddRazorPagesOptions(options => {
+        options.Conventions.AddPageRoute("/Video", "/v/{videoid}");
+      });
         
       services.AddRouting();
       services.AddTransient<ICarService, CarService>();
@@ -106,9 +108,13 @@ namespace CirAnime
       services.AddSingleton<IFileProvider>(physicalProvider);
 
         services.AddDbContext<CirAnimeContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CirAnimeContext")));
+                options.UseSqlite(Configuration.GetConnectionString("CirAnimeContext")));
 
       services.AddScoped<MyCustomTusConfiguration>();
+      services.AddAuthorization(options => {
+        options.AddPolicy("Hoster", policy => policy.RequireClaim(ClaimTypes.NameIdentifier, "asdf", "142933035740954624")); 
+        
+      });
 
     }
 
@@ -133,9 +139,8 @@ namespace CirAnime
       }
       app.UseAuthentication();
       app.UseTus(
-        cont => cont.RequestServices.GetService<MyCustomTusConfiguration>()
-        );
-    //  app.UseTus(CreateTusConfiguration);
+        cont => cont.RequestServices.GetService<MyCustomTusConfiguration>().GetTusConfiguration()
+        ); 
 
       app.UseHttpsRedirection();
       app.UseStaticFiles();
@@ -148,102 +153,7 @@ namespace CirAnime
         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
         endpoints.MapRazorPages();
       });
-    }
-
-    /*
-    private DefaultTusConfiguration ConfigureTus(HttpContext httpContext)
-    {
-      return new DefaultTusConfiguration
-      {
-        Store = new TusDiskStore(Configuration.GetValue<string>("FileUploadPath")),
-        UrlPath = "/uploadTus",// + httpContext.User.Identity,
-        
-        Events = new tusdotnet.Models.Configuration.Events
-        {
-          OnFileCompleteAsync = async eventContext =>
-          {
-            ITusFile file = await eventContext.GetFileAsync();
-            Console.WriteLine("file finished");
-            await ProcessFile(file);
-          },
-          OnAuthorizeAsync = async eventContext =>
-          {
-            eventContext.FailRequest("not authorized");
-          }
-          
-        }
-      };
-
-    } */
-
-    public DefaultTusConfiguration CreateTusConfiguration(HttpContext httpContext)
-    {
-
-      if (!httpContext.User.Identity.IsAuthenticated)
-      {
-        return null;
-      }
-
-      string baseDirectory = Configuration.GetValue<string>("FileUploadPath");
-      if (!baseDirectory.EndsWith("/")) baseDirectory.Append('/');
-
-
-      string usersubdirectory = httpContext.User.Identity.Name;
-      usersubdirectory = usersubdirectory.Replace('/', '_').Replace("..", "_");
-
-
-      string uploadDirectory = baseDirectory + usersubdirectory + "/";
-      if (!Directory.Exists(uploadDirectory))
-      {
-        Directory.CreateDirectory(uploadDirectory);
-      }
-
-      return new DefaultTusConfiguration
-      {
-        Store = new TusDiskStore(uploadDirectory),
-        UrlPath = "/uploadTus",// + httpContext.User.Identity,
-
-        Events = new tusdotnet.Models.Configuration.Events
-        {
-
-          OnFileCompleteAsync = async eventContext =>
-          {
-            ITusFile file = await eventContext.GetFileAsync();
-            var metaData = await file.GetMetadataAsync(eventContext.CancellationToken);
-            string filename = metaData["filename"].GetString(System.Text.Encoding.UTF8);
-            
-            UploadEntry entry = new UploadEntry
-            {
-              OriginalFileName = filename,
-              Owner = httpContext.User.Identity.Name,
-              Title = filename.Contains('.') ? filename.Remove(filename.LastIndexOf('.')) : filename,
-              UploadDate = DateTime.Now
-            };
-           // dbContext.UploadEntry.Add(entry);
-
-            Console.WriteLine("file finished");
-            await ProcessFile(file);
-
-          },
-          OnAuthorizeAsync = async eventContext =>
-          {
-
-
-            //eventContext.FailRequest("not authorized");
-          },
-          OnBeforeCreateAsync = async eventContext =>
-          {
-            string filename = eventContext.Metadata["filename"].GetString(System.Text.Encoding.UTF8);
-            string filetype = eventContext.Metadata["filetype"].GetString(System.Text.Encoding.UTF8);
-
-            Console.WriteLine(filename);
-
-          }
-
-        }
-      };
-
-
+      app.UseStaticFiles();
     }
 
   }

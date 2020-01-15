@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CirAnime.Pages
 {
-  [Authorize]
+  [Authorize(Policy = "Hoster")]
   public class PrivacyModel : PageModel
   {
     private readonly ILogger<PrivacyModel> _logger;
