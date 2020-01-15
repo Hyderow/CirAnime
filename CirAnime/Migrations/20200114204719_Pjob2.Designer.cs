@@ -3,14 +3,16 @@ using System;
 using CirAnime.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CirAnime.Migrations
 {
     [DbContext(typeof(CirAnimeContext))]
-    partial class CirAnimeContextModelSnapshot : ModelSnapshot
+    [Migration("20200114204719_Pjob2")]
+    partial class Pjob2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
