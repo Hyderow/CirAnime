@@ -15,7 +15,13 @@ namespace CirAnime.Data
      
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+      options.UseSqlite("Data Source=ciranime.db");
+        }
         public DbSet<CirAnime.Models.UploadEntry> UploadEntry { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<CirAnime.Models.MediaInfo> MediaInfo { get; set; }
+        public DbSet<ProcessingJob> ProcessingJob { get; set; }
     }
 }
