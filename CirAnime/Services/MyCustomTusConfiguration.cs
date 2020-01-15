@@ -146,10 +146,11 @@ namespace CirAnime.Services
       string baseDirectory = _config.GetValue<string>("FileUploadPath");
       if (!baseDirectory.EndsWith("/"))
         baseDirectory.Append('/');
-      string usersubdirectory = _httpContext.HttpContext.User.Identity.Name;
-      usersubdirectory = usersubdirectory.Replace('/', '_').Replace("..", "_");
-      string uploadDirectory = baseDirectory + usersubdirectory + "/";
-      return uploadDirectory;
+      //string usersubdirectory = _httpContext.HttpContext.User.Identity.Name;
+      //usersubdirectory = usersubdirectory.Replace('/', '_').Replace("..", "_");
+      //string uploadDirectory = baseDirectory + usersubdirectory + "/";
+      return baseDirectory;
+     // return uploadDirectory;
       
 
     }
