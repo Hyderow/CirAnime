@@ -4,6 +4,7 @@ class DatabaseHandler(object):
 
     selectJobQueryString = "SELECT * FROM ProcessingJob WHERE Status = 0 ORDER BY CreationDate ASC;"
     UpdateJobStatusQueryString = "UPDATE ProcessingJob SET Status = ? WHERE ID = ?;"
+    UpdateJobProgressQueryString = "UPDATE ProcessingJob SET Progress = ? WHERE ID = ?;"
     SelectMediaInfoQuery = "SELECT * FROM MediaInfo WHERE ID = ?"
     CreateNewJobQuery = "INSERT INTO ProcessingJob VALUES (?,?,?,?,?,?,?) "
     SelectUploadEntryQuery = "SELECT * FROM UploadEntry WHERE ID = ?"
@@ -44,3 +45,9 @@ class DatabaseHandler(object):
         args = (status, job["ID"])
         c.execute(self.UpdateJobStatusQueryString, args)
         self.connection.commit()
+    def updateJobProgress(self, job, progress):
+        c = self.connection.cursor()
+        args = (progress, job["ID"])
+        c.execute(self.UpdateJobProgressQueryString, args)
+        self.connection.commit()
+
