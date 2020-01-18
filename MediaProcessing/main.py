@@ -10,6 +10,7 @@ from DatabaseHandler import DatabaseHandler
 import json
 from JobType import JobType
 import re
+import urllib
 
 
 
@@ -27,29 +28,24 @@ def main():
     #     for line in process.stderr:
     #         print(line, end='')
 
-    dbpath = "G:/Programming/CirAnime/CirAnime/CirAnime/ciranime.db"
-    inputPath = "file:H:/unprocessed/"
+    # dbpath = "G:/Programming/CirAnime/CirAnime/CirAnime/ciranime.db"
+    # inputPath = "file:H:/unprocessed/"
     
     with open("config.json", "r") as f:
         config = json.load(f)
-
-    connection = sqlite3.connect(config["DBPath"])
-    connection.row_factory=sqlite3.Row
-    c = connection.cursor()
-
-
     dbhandler = DatabaseHandler(dbpath)
     while True:
-        c.execute(selectJobQueryString)
+        job = dbhandler.getNextJob()
 
-        entry = c.fetchone()
         if entry != None:
-            job = dict(entry)
-            if job["Type"] == JobType.PreProcessing:
-                PreprocessingHandler(job, dbhandler, config).run()
-            elif job["Type"] == JobType.Encoding:
-                EncodingHandler(job, dbhandler, config).run()
-        
+            try:
+                job = dict(entry)
+                if job["Type"] == JobType.PreProcessing:
+                    PreprocessingHandler(job, dbhandler, config).run()
+                elif job["Type"] == JobType.Encoding:
+                    EncodingHandler(job, dbhandler, config).run()
+            except Exception as ex:
+
         time.sleep(5)
         print("done")
       #  break

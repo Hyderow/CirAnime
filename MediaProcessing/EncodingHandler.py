@@ -34,18 +34,14 @@ class EncodingHandler(JobHandler):
         (root, ext) = os.path.splitext(self.job["OriginalFile"])
         newFilename = root.replace("[1080p]", "").replace("[720p]", "").replace("[480p]", "") + "["+str(encodingHeight)+"p]" + ".mp4"
 
-        # if (height >= 1080):
-        #     newFilename = root + " [1080p]" + ".mp4"
-        # elif (height >= 720):
-        #     newFilename = root + " [720p]" + ".mp4"
-        # else:
-        #     newFilename = root + " [480p]" + ".mp4"
-        newFilename = newFilename.replace(" ", "_").replace("\"", "_").replace("\'", "_").replace("&", "_")
-
         encode_outfile = self.config["UnprocessedFilePath"] + newFilename
         self.encodeFile(infile, encodingHeight, encode_outfile, crf_value) #TODO: Implement
-        self.copyFileToDestFolder(newFilename, newFilename)
-        self.dbhandler.CreateNewSource(self.job, newFilename, height )
+
+        sourceid = self.dbhandler.getNextSourceID()
+        encodedFilename = str(sourceid)+ "-" + newFilename
+
+        self.copyFileToDestFolder(newFilename, encodedFilename)
+        self.dbhandler.CreateNewSource(self.job, encodedFilename, height )
         if encodingHeight >= 720:
             self.dbhandler.createNewJob(self.job["UploadEntryID"], newFilename, JobType.Encoding, JobStatus.Pending)
         #create new job, mark this one finished

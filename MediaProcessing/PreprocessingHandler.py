@@ -25,10 +25,12 @@ class PreprocessingHandler(JobHandler):
             newFilename = root + " [720p]" + ext
         else:
             newFilename = root + " [480p]" + ext
-        newFilename = newFilename.replace(" ", "_").replace("\"", "_").replace("\'", "_").replace("&", "_").replace("\\", "_")
+        # newFilename = newFilename.replace(" ", "_").replace("\"", "_").replace("\'", "_").replace("&", "_").replace("\\", "_")
 
         if "mp4" in probe["format"]["format_name"]:
             print("no processing needed")
+            sourceid = self.dbhandler.getNextSourceID()
+            encodedFilename = str(sourceid)+ "-" + newFilename  
             self.copyFileToDestFolder(infile, newFilename)
             self.dbhandler.CreateNewSource(self.job, newFilename, height )
             if height >= 720:
