@@ -75,7 +75,7 @@ namespace CirAnime.Services
               {
                 title = filename.Contains('.') ? filename.Remove(filename.LastIndexOf('.')) : filename,
                 duration = 0,
-                thumbnail = "cirani.me/circomfy.png",
+                thumbnail = "https://cirani.me/circomfy.png",
                 live = false
               }
             };
@@ -86,8 +86,9 @@ namespace CirAnime.Services
               UploadEntry = entry,
               Status = ProcessingStatus.Pending,
               Type = ProcessingType.PreProcessing,
-              CreationDate = DateTime.Now,
+              CreationDate = DateTime.UtcNow,
               Progress = 0,
+              Quality = 0
             };
 
             entry.ProcessingJobs.Add(p);
@@ -137,7 +138,6 @@ namespace CirAnime.Services
         {
           Directory.CreateDirectory(uploadDirectory);
         }
-      
     }
 
 

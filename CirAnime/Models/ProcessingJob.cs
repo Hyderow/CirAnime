@@ -15,6 +15,7 @@ namespace CirAnime.Models
     public ProcessingType Type { get; set; }
     public ProcessingStatus Status { get; set; }
     public DateTime CreationDate { get; set; }
+    public int Quality { get; set; }
     public int Progress { get; set; }
 
     

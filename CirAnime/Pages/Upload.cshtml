@@ -6,62 +6,6 @@
 
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-   <!--     <form enctype="multipart/form-data" method="post">
-            <dl>
-                <dt>
-                    <label asp-for="upload.formfile"></label>
-
-                </dt>
-                <dd>
-                    <input asp-for="upload.formfile" type="file">
-                    <span asp-validation-for="upload.formfile"></span>
-                </dd>
-            </dl>
-
-            <input asp-page-handler="upload" class="btn" type="submit" value="upload" />
-        </form>
-        <p></p> -->
-
-
-
-        <table>
-            <tr>
-                <td>
-                    <label for="endpoint">
-                        Upload endpoint:
-                    </label>
-                </td>
-                <td>
-                    <input type="text" id="endpoint" name="endpoint" value="https://master.tus.io/files/">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="chunksize">
-                        Chunk size (bytes):
-                    </label>
-                </td>
-                <td>
-                    <input type="number" id="chunksize" name="chunksize">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="resume">
-                        Perform full upload:
-                        <br />
-                        <small>(even if we could resume)</small>
-                    </label>
-                </td>
-                <td>
-                    <input type="checkbox" id="resume">
-                </td>
-            </tr>
-        </table>
-
-        <br />
 
         <input type="file">
 
@@ -69,11 +13,6 @@
         <br />
 
         <div class="row">
-            <div class="span8">
-               <!-- <div class="progress progress-striped progress-success">
-                    <div class="bar" style="width: 0%;height=30px;"></div>
-                </div> -->
-            </div>
             <div class="span4">
                 <button class="btn stop" id="toggle-btn">start upload</button>
             </div>

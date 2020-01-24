@@ -12,7 +12,7 @@ namespace CirAnime.Models
     public int duration { get; set; }
     public bool live { get; set; }
     public string thumbnail { get; set; }
-    public virtual List<Source> sources { get; } = new List<Source>();
+    public List<Source> sources { get; } = new List<Source>();
     public virtual List<TextTrack> textTracks { get; } = new List<TextTrack>();
   }
   public class Source

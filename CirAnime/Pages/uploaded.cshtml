@@ -1,0 +1,44 @@
+﻿@page
+@model CirAnime.Pages.uploadedModel
+
+@{
+    ViewData["Title"] = "uploaded";
+}
+
+<h1>uploaded</h1>
+
+<h4>UploadEntry</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UploadEntry.Title" class="control-label"></label>
+                <input asp-for="UploadEntry.Title" class="form-control" />
+                <span asp-validation-for="UploadEntry.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UploadEntry.OriginalFileName" class="control-label"></label>
+                <input asp-for="UploadEntry.OriginalFileName" class="form-control" />
+                <span asp-validation-for="UploadEntry.OriginalFileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UploadEntry.UploadDate" class="control-label"></label>
+                <input asp-for="UploadEntry.UploadDate" class="form-control" />
+                <span asp-validation-for="UploadEntry.UploadDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

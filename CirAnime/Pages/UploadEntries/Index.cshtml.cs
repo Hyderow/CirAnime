@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CirAnime.Data;
 using CirAnime.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CirAnime.Pages.UploadEntries
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly CirAnime.Data.CirAnimeContext _context;
@@ -23,8 +26,23 @@ namespace CirAnime.Pages.UploadEntries
 
         public async Task OnGetAsync()
         {
-            UploadEntry = await _context.UploadEntry
-                .Include(u => u.User).ToListAsync();
+            try
+            {
+                var uid = UInt64.Parse(Request.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                UploadEntry = await _context.UploadEntry
+                    .Include(u => u.User).Include(u => u.MediaInfo).Include(u => u.MediaInfo.sources).Include(u => u.ProcessingJobs).Where(u => u.User.DiscordID == uid).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            }
+
+        public async Task OnUpdateProgessAsync()
+        { 
+            
+
         }
     }
 }

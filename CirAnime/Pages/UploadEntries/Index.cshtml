@@ -17,32 +17,38 @@
                 @Html.DisplayNameFor(model => model.UploadEntry[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UploadEntry[0].OriginalFileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UploadEntry[0].User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UploadEntry[0].UploadDate)
+                Status
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.UploadEntry) {
-        <tr>
+        <tr id="@item.ID">
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                <a href="/v/@(item.MediaInfo.ID + ".json")">@item.Title</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OriginalFileName)
+                @foreach (var job in item.ProcessingJobs)
+                { 
+                    <p>@job.Quality : @job.Progress</p>
+                }
+            </td>
+            @*<td>
+                <ul>
+                    @foreach (var source in item.MediaInfo.sources)
+                    {
+                        <li>@source.url </li>
+                    }
+                </ul>
+                @Html.DisplayFor(modelItem => item.MediaInfo.sources)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UploadDate)
-            </td>
+                
+                @{ var a = item.MediaInfo.ID + ".json";}
+                 <a href="@("https://www.cirani.me/v/" + @item.MediaInfo.ID + ".json")">@item.MediaInfo.title</a>
+            </td>*@
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

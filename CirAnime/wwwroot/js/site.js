@@ -58,8 +58,7 @@ function startUpload() {
         return;
     }
 
-    var endpoint = endpointInput.value;
-    var chunkSize = parseInt(chunkInput.value, 10);
+    var chunkSize = 1000000;
     if (isNaN(chunkSize)) {
         chunkSize = Infinity;
     }
@@ -68,7 +67,7 @@ function startUpload() {
 
     var options = {
         endpoint: "/uploadTus",
-        resume: !resumeCheckbox.checked,
+        resume: true,
         chunkSize: chunkSize,
         retryDelays: [0, 1000, 3000, 5000],
         uploadDataDuringCreation: true,
