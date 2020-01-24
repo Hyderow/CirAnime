@@ -7,7 +7,7 @@ class DatabaseHandler(object):
     UpdateJobStatusQueryString = "UPDATE ProcessingJob SET Status = ? WHERE ID = ?;"
     UpdateJobProgressQueryString = "UPDATE ProcessingJob SET Progress = ? WHERE ID = ?;"
     SelectMediaInfoQuery = "SELECT * FROM MediaInfo WHERE ID = ?"
-    CreateNewJobQuery = "INSERT INTO ProcessingJob VALUES (?,?,?,?,?,?,?) "
+    CreateNewJobQuery = "INSERT INTO ProcessingJob ([ID],[OriginalFile],[UploadEntryID],[Type],[Status],[CreationDate],[Progress],[Quality]) VALUES (?,?,?,?,?,?,?,?) "
     SelectUploadEntryQuery = "SELECT * FROM UploadEntry WHERE ID = ?"
     CreateSourceQuery = "INSERT INTO Source VALUES (?,?,?,?,?,?)"
     selectHighestSourceID = "SELECT ID FROM Source ORDER BY ID DESC LIMIT 1;"
@@ -20,14 +20,15 @@ class DatabaseHandler(object):
 
     def getNextJob(self):
         c = self.connection.cursor()
-        c.execute(selectJobQueryString)
+        c.execute(self.selectJobQueryString)
+        job = None
         res = c.fetchone()
-        if job != None:
-            job = dict(c.fetchone())
+        if res != None:
+            job = dict(res)
         return job
-    def createNewJob(self, uploadID, origFile, jobtype, status):
+    def createNewJob(self, uploadID, origFile, jobtype, status, quality):
         c = self.connection.cursor()
-        arguments = (None, origFile, uploadID, jobtype, status, datetime.datetime.utcnow(), 0)
+        arguments = (None, origFile, uploadID, jobtype, status, datetime.datetime.utcnow(), 0, quality)
         
         c.execute(self.CreateNewJobQuery, arguments)
         self.connection.commit()
